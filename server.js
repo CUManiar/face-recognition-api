@@ -1,6 +1,3 @@
-/**
- * Author cumaniar
- */
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -16,7 +13,7 @@ const profile = require("./controllers/profile");
 const db = knex({
   client: "pg",
   connection: {
-    connectString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
     ssl: true
   }
 });
@@ -26,16 +23,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  const data = db
-    .select("*")
-    .from("users")
-    .then(res => res.json())
-    .then(data => {
-      res.json(data);
-    })
-    .catch(err => res.status(400).json("Could not connect!"));
-});
+app.get("/", (req, res) => res.json("It's working"));
 
 app.post("/signin", (req, res) => {
   signIn.handleSignIn(req, res, db, bcrypt);
@@ -59,5 +47,5 @@ app.post("/face_url", (req, res) => {
 
 app.listen(process.env.PORT || 8000, (data, err) => {
   if (err) console.log("Something went wrong! ", err);
-  console.log(`Server started on PORT  ${process.env.PORT}`);
+  console.log(`Server started on PORT  ${process.env.PORT || 8000}`);
 });
