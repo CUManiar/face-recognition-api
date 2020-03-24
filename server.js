@@ -26,6 +26,17 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+  const data = db
+    .select("*")
+    .from("users")
+    .then(res => res.json())
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => res.status(400).json("Could not connect!"));
+});
+
 app.post("/signin", (req, res) => {
   signIn.handleSignIn(req, res, db, bcrypt);
 });
