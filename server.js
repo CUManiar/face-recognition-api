@@ -45,7 +45,7 @@ app.post("/face_url", (req, res) => {
   image.handleApiCall(req, res);
 });
 
-app.listen(8000, (data, err) => {
+app.listen(process.env.PORT || 8000, (data, err) => {
   if (err) console.log("Something went wrong! ", err);
-  console.log("Server started on PORT ", 8000);
+  console.log(`Server started on PORT  ${process.env.PORT}`);
 });
